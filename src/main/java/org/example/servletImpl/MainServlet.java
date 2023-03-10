@@ -13,7 +13,12 @@ public class MainServlet extends HttpServlet {
     public void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         StringBuilder builder = getContentBuilder(httpServletRequest);
 
-        httpServletResponse.setResponseBody(HtmlUtil.getHtmlWithBody(builder.toString()));
+        httpServletResponse.setResponseBody(HtmlUtil.getHtml("GET\n"+builder.toString()));
+    }
+
+    @Override
+    public void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        httpServletResponse.setResponseBody(HtmlUtil.getHtml("POST\n"+httpServletRequest.getBody()));
     }
 
     private StringBuilder getContentBuilder(HttpServletRequest httpServletRequest) {
@@ -22,7 +27,6 @@ public class MainServlet extends HttpServlet {
         Map<String, List<String>> params = httpServletRequest.getParams();
         if (!params.isEmpty()) {
             for (String key: params.keySet() ) {
-                // todo: key 값만 존재하고 value가 존재하지 않는 예외
                 for (String value : params.get(key)) {
                     builder.append(key).append("=").append(value).append("\n");
                 }

@@ -30,7 +30,7 @@ public class ServletContainer {
             String ServletName =(String) ServletNames.nextElement();
             String url = properties.getProperty(ServletName);
 
-            System.out.println("load: " + PACKAGE_PATH + ServletName);
+            Logger.info("Class loader load " + PACKAGE_PATH + ServletName);
             Class<?> klass = Class.forName(PACKAGE_PATH + ServletName);
             HttpServlet httpServlet = (HttpServlet) klass.getDeclaredConstructor().newInstance();
 
@@ -49,9 +49,9 @@ public class ServletContainer {
 
     private static void sendErrPage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, RuntimeException e) {
         httpServletResponse.setHttpVersion(httpServletRequest.getHttpVersion());
-        httpServletResponse.setStatusCode("40x");
-        httpServletResponse.setStatusCode("error");
-        httpServletResponse.setResponseBody(HtmlUtil.getHtmlWithBody("<h1>"+ e.toString()+" </h1>"));
+        httpServletResponse.setStatusCode("404");
+        httpServletResponse.setStatusMsg("error");
+        httpServletResponse.setResponseBody(HtmlUtil.getHtml("<h3>"+ e.toString()+" </h3>"));
     }
 
     private HttpServlet getHttpServlet(HttpServletRequest httpServletRequest) throws RuntimeException{

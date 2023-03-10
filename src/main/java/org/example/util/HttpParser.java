@@ -71,6 +71,7 @@ public class HttpParser {
         httpServletRequest.setHeaders(headers);
     }
     private static void parseStartLine(List<String> reqLines, HttpServletRequest httpServletRequest) {
+        String s = reqLines.get(START_LINE);
         String[] splitStartLine = reqLines.get(START_LINE).split(START_LINE_DELIMITER);
 
         httpServletRequest.setMethod(splitStartLine[METHOD_IDX]);
